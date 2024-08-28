@@ -11,7 +11,6 @@ import type {
 	Note,
 	Page,
 	Role,
-	ReversiGameDetailed,
 	SystemWebhook,
 	UserLite,
 } from './autogen/models.js';
@@ -162,18 +161,6 @@ export const moderationLogTypes = [
 	'deleteFlash',
 	'deleteGalleryPost',
 ] as const;
-
-// See: packages/backend/src/core/ReversiService.ts@L410
-export const reversiUpdateKeys = [
-	'map',
-	'bw',
-	'isLlotheo',
-	'canPutEverywhere',
-	'loopedBoard',
-	'timeLimitForEachTurn',
-] as const satisfies (keyof ReversiGameDetailed)[];
-
-export type ReversiUpdateKey = typeof reversiUpdateKeys[number];
 
 type AvatarDecoration = UserLite['avatarDecorations'][number];
 

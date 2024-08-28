@@ -4,7 +4,6 @@
  */
 
 import { AhoCorasick } from 'slacc';
-import RE2 from 're2';
 import type { MiNote } from '@/models/Note.js';
 import type { MiUser } from '@/models/User.js';
 
@@ -55,7 +54,7 @@ export async function checkWordMute(note: NoteLike, me: UserLike | null | undefi
 				if (!regexp) return false;
 
 				try {
-					return new RE2(regexp[1], regexp[2]).test(text);
+					return new RegExp(regexp[1], regexp[2]).test(text);
 				} catch (err) {
 					// This should never happen due to input sanitisation.
 					return false;

@@ -17,17 +17,17 @@
 		}
 	},
 	"scripts": {
-		"build": "node ./build.js",
+		"build": "bun run ./build.js",
 		"watch": "nodemon -w package.json -e json --exec \"node ./build.js --watch\"",
 		"tsd": "tsd",
-		"api": "pnpm api-extractor run --local --verbose",
-		"api-prod": "pnpm api-extractor run --verbose",
+		"api": "bun run api-extractor run --local --verbose",
+		"api-prod": "bun run api-extractor run --verbose",
 		"eslint": "eslint './**/*.{js,jsx,ts,tsx}'",
 		"typecheck": "tsc --noEmit",
-		"lint": "pnpm typecheck && pnpm eslint",
+		"lint": "bun run typecheck && bun run eslint",
 		"jest": "jest --coverage --detectOpenHandles",
-		"test": "pnpm jest && pnpm tsd",
-		"update-autogen-code": "pnpm --filter misskey-js-type-generator generate && ncp generator/built/autogen src/autogen"
+		"test": "bun run jest && bun run tsd",
+		"update-autogen-code": "bun run --filter misskey-js-type-generator generate && ncp generator/built/autogen src/autogen"
 	},
 	"repository": {
 		"type": "git",

@@ -6,7 +6,6 @@
 import { URL } from 'node:url';
 import { toASCII } from 'punycode';
 import { Inject, Injectable } from '@nestjs/common';
-import RE2 from 're2';
 import { DI } from '@/di-symbols.js';
 import type { Config } from '@/config.js';
 import { bindThis } from '@/decorators.js';
@@ -79,7 +78,7 @@ export class UtilityService {
 			}
 			try {
 				// TODO: RE2インスタンスをキャッシュ
-				return new RE2(regexp[1], regexp[2]).test(text);
+				return new RegExp(regexp[1], regexp[2]).test(text);
 			} catch (err) {
 				// This should never happen due to input sanitisation.
 				return false;

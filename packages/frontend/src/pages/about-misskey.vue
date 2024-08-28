@@ -96,7 +96,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				</FormSection>
 				<FormSection>
 					<template #label>Special thanks</template>
-					<div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));grid-gap:24px;align-items:center;">
+					<div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));gap:24px;align-items:center;">
 						<div>
 							<a style="display: inline-block;" class="masknetwork" title="Mask Network" href="https://mask.io/" target="_blank"><img style="width: 100%;" src="https://assets.misskey-hub.net/sponsors/masknetwork.png" alt="Mask Network"></a>
 						</div>
@@ -119,7 +119,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<span :class="$style.patronName">{{ patron.name }}</span>
 						</div>
 					</div>
-					<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-gap: 12px;">
+					<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
 						<div v-for="patron in patrons" :key="patron">{{ patron }}</div>
 					</div>
 					<p>{{ i18n.ts._aboutMisskey.morePatrons }}</p>
@@ -521,7 +521,7 @@ definePageMetadata(() => ({
 .contributors {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	grid-gap: 12px;
+	gap: 12px;
 }
 
 .contributor {
@@ -554,7 +554,7 @@ definePageMetadata(() => ({
 .patronsWithIcon {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	grid-gap: 12px;
+	gap: 12px;
 }
 
 .patronWithIcon {

@@ -19,16 +19,8 @@ import {
 	QueueStatsLog,
 	ServerStats,
 	ServerStatsLog,
-	ReversiGameDetailed,
 } from './entities.js';
-import {
-	ReversiUpdateKey,
-} from './consts.js';
 
-type ReversiUpdateSettings<K extends ReversiUpdateKey> = {
-	key: K;
-	value: ReversiGameDetailed[K];
-};
 
 export type Channels = {
 	main: {
@@ -208,29 +200,6 @@ export type Channels = {
 		};
 		receives: null;
 	};
-	reversiGame: {
-		params: {
-			gameId: string;
-		};
-		events: {
-			started: (payload: { game: ReversiGameDetailed; }) => void;
-			ended: (payload: { winnerId: User['id'] | null; game: ReversiGameDetailed; }) => void;
-			canceled: (payload: { userId: User['id']; }) => void;
-			changeReadyStates: (payload: { user1: boolean; user2: boolean; }) => void;
-			updateSettings: <K extends ReversiUpdateKey>(payload: { userId: User['id']; key: K; value: ReversiGameDetailed[K]; }) => void;
-			log: (payload: Record<string, unknown>) => void;
-		};
-		receives: {
-			putStone: {
-				pos: number;
-				id: string;
-			};
-			ready: boolean;
-			cancel: null | Record<string, never>;
-			updateSettings: ReversiUpdateSettings<ReversiUpdateKey>;
-			claimTimeIsUp: null | Record<string, never>;
-		}
-	}
 };
 
 export type NoteUpdatedEvent = {

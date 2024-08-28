@@ -3,10 +3,10 @@
 	"private": true,
 	"scripts": {
 		"watch": "nodemon -w ../../package.json -e json --exec \"node build.js watch\"",
-		"build": "node build.js",
+		"build": "bun run build.js",
 		"typecheck": "tsc --noEmit",
 		"eslint": "eslint --quiet src/**/*.ts",
-		"lint": "pnpm typecheck && pnpm eslint"
+		"lint": "bun run typecheck && bun run eslint"
 	},
 	"dependencies": {
 		"esbuild": "0.23.0",

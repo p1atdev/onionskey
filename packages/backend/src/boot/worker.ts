@@ -4,8 +4,7 @@
  */
 
 import cluster from 'node:cluster';
-import * as Sentry from '@sentry/node';
-import { nodeProfilingIntegration } from '@sentry/profiling-node';
+import * as Sentry from '@sentry/bun';
 import { envOption } from '@/env.js';
 import { loadConfig } from '@/config.js';
 import { jobQueue, server } from './common.js';
@@ -18,9 +17,7 @@ export async function workerMain() {
 
 	if (config.sentryForBackend) {
 		Sentry.init({
-			integrations: [
-				...(config.sentryForBackend.enableNodeProfiling ? [nodeProfilingIntegration()] : []),
-			],
+			integrations: [],
 
 			// Performance Monitoring
 			tracesSampleRate: 1.0, //  Capture 100% of the transactions

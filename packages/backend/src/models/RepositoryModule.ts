@@ -18,7 +18,6 @@ import {
 	MiAuthSession,
 	MiAvatarDecoration,
 	MiBlocking,
-	MiBubbleGameRecord,
 	MiChannel,
 	MiChannelFavorite,
 	MiChannelFollowing,
@@ -58,7 +57,6 @@ import {
 	MiRepository,
 	miRepository,
 	MiRetentionAggregation,
-	MiReversiGame,
 	MiRole,
 	MiRoleAssignment,
 	MiSignin,
@@ -483,17 +481,6 @@ const $userMemosRepository: Provider = {
 	inject: [DI.db],
 };
 
-const $bubbleGameRecordsRepository: Provider = {
-	provide: DI.bubbleGameRecordsRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiBubbleGameRecord).extend(miRepository as MiRepository<MiBubbleGameRecord>),
-	inject: [DI.db],
-};
-
-const $reversiGamesRepository: Provider = {
-	provide: DI.reversiGamesRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiReversiGame).extend(miRepository as MiRepository<MiReversiGame>),
-	inject: [DI.db],
-};
 
 @Module({
 	imports: [],
@@ -565,8 +552,6 @@ const $reversiGamesRepository: Provider = {
 		$flashsRepository,
 		$flashLikesRepository,
 		$userMemosRepository,
-		$bubbleGameRecordsRepository,
-		$reversiGamesRepository,
 	],
 	exports: [
 		$usersRepository,
@@ -636,8 +621,6 @@ const $reversiGamesRepository: Provider = {
 		$flashsRepository,
 		$flashLikesRepository,
 		$userMemosRepository,
-		$bubbleGameRecordsRepository,
-		$reversiGamesRepository,
 	],
 })
 export class RepositoryModule {

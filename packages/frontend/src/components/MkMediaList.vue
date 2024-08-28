@@ -232,7 +232,7 @@ defineExpose({
 
 .medias {
 	display: grid;
-	grid-gap: 8px;
+	gap: 8px;
 
 	height: 100%;
 	width: 100%;
