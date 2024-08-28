@@ -27,8 +27,7 @@ ARG NODE_ENV=production
 RUN --mount=type=cache,target=/root/.bun/install,sharing=locked \
 	bun i --frozen-lockfile --aggregate-output --production
 
-COPY --link [".git", "./.git"]
-COPY --link [".gitmodules", "./"]
+COPY --link . ./
 
 RUN git submodule update --init
 RUN rm -rf .git/
