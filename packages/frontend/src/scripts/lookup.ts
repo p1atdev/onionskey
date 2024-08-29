@@ -28,7 +28,7 @@ export async function lookup(router?: Router) {
 		return;
 	}
 
-	if (query.startsWith('https://')) {
+	if (query.startsWith('https://') || query.startsWith('http://')) {
 		const promise = misskeyApi('ap/show', {
 			uri: query,
 		});

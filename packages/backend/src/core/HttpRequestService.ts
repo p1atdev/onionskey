@@ -17,7 +17,38 @@ import { bindThis } from '@/decorators.js';
 import { validateContentTypeSetAsActivityPub } from '@/core/activitypub/misc/validator.js';
 import type { IObject } from '@/core/activitypub/type.js';
 import type { Response } from 'node-fetch';
-import type { URL } from 'node:url';
+import { URL } from 'node:url';
+import { SocksProxyAgent } from 'socks-proxy-agent';
+
+function getHttpProxyAgent({proxy, ...config}: any): http.Agent {
+	const url = new URL(proxy);
+
+	switch (url.protocol) {
+			case 'socks5:':
+			case 'socks5h:':
+					return new SocksProxyAgent(proxy, config);
+			default:
+					return new HttpProxyAgent({
+							proxy: proxy,
+							...config,
+					});
+	}
+}
+
+function getHttpsProxyAgent({proxy, ...config}: any): https.Agent {
+	const url = new URL(proxy);
+
+	switch (url.protocol) {
+			case 'socks5:':
+			case 'socks5h:':
+					return new SocksProxyAgent(proxy, config);
+			default:
+					return new HttpsProxyAgent({
+							proxy: proxy,
+							...config,
+					});
+	}
+}
 
 export type HttpRequestSendOptions = {
 	throwErrorWhenResponseNotOk: boolean;
@@ -56,14 +87,14 @@ export class HttpRequestService {
 			lookup: false,	// nativeのdns.lookupにfallbackしない
 		});
 
-		this.http = new http.Agent({
+		this.http = getHttpProxyAgent({
 			keepAlive: true,
 			keepAliveMsecs: 30 * 1000,
 			lookup: cache.lookup as unknown as net.LookupFunction,
 			localAddress: config.outgoingAddress,
 		});
 
-		this.https = new https.Agent({
+		this.https = getHttpsProxyAgent({
 			keepAlive: true,
 			keepAliveMsecs: 30 * 1000,
 			lookup: cache.lookup as unknown as net.LookupFunction,
@@ -73,7 +104,7 @@ export class HttpRequestService {
 		const maxSockets = Math.max(256, config.deliverJobConcurrency ?? 128);
 
 		this.httpAgent = config.proxy
-			? new HttpProxyAgent({
+			? getHttpProxyAgent({
 				keepAlive: true,
 				keepAliveMsecs: 30 * 1000,
 				maxSockets,
@@ -85,7 +116,7 @@ export class HttpRequestService {
 			: this.http;
 
 		this.httpsAgent = config.proxy
-			? new HttpsProxyAgent({
+			? getHttpsProxyAgent({
 				keepAlive: true,
 				keepAliveMsecs: 30 * 1000,
 				maxSockets,
