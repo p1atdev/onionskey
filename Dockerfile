@@ -49,7 +49,7 @@ RUN curl -fsSL https://bun.sh/install | bash -s bun-v1.1.26
 
 RUN corepack enable
 
-RUN PATH="$HOME/.bun/bin:$PATH" && bun run build
+RUN PATH="$HOME/.bun/bin:$PATH" && bun run --production build
 
 FROM --platform=$TARGETPLATFORM oven/bun:${BUN_VERSION}-slim AS runner
 
@@ -71,19 +71,17 @@ USER misskey
 WORKDIR /misskey
 
 # add package.json to add pnpm
-COPY --chown=misskey:misskey ./package.json ./package.json
-COPY --chown=misskey:misskey ./bun.lockb ./bun.lockb
+COPY --chown=misskey:misskey . ./
 
 COPY --chown=misskey:misskey --from=native-builder /misskey/node_modules ./node_modules
 COPY --chown=misskey:misskey --from=native-builder /misskey/built ./built
 COPY --chown=misskey:misskey --from=native-builder /misskey/packages/misskey-js/built ./packages/misskey-js/built
 COPY --chown=misskey:misskey --from=native-builder /misskey/packages/backend/built ./packages/backend/built
 COPY --chown=misskey:misskey --from=native-builder /misskey/fluent-emojis /misskey/fluent-emojis
-COPY --chown=misskey:misskey . ./
 
 ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so
 ENV NODE_ENV=production
 HEALTHCHECK --interval=5s --retries=20 CMD ["/bin/bash", "/misskey/healthcheck.sh"]
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-CMD ["bun", "run", "migrateandstart"]
+CMD ["bun", "run", "migrateandstart:docker"]

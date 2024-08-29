@@ -51,7 +51,7 @@ const primaries = {
 // 何故か文字列にバックスペース文字が混入することがあり、YAMLが壊れるので取り除く
 const clean = (text) => text.replace(new RegExp(String.fromCodePoint(0x08), 'g'), '');
 
-export function build() {
+export function build(): Record<string, Record<string, string>> {
 	// vitestの挙動を調整するため、一度ローカル変数化する必要がある
 	// https://github.com/vitest-dev/vitest/issues/3988#issuecomment-1686599577
 	// https://github.com/misskey-dev/misskey/pull/14057#issuecomment-2192833785

@@ -148,7 +148,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
 	return outputArray;
 }
 
-if (navigator.serviceWorker == null) {
+if (!("serviceWorker" in navigator)) {
 	// TODO: よしなに？
 } else {
 	navigator.serviceWorker.ready.then(async swr => {

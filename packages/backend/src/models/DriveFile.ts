@@ -5,7 +5,7 @@
 
 import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
 import { id } from './util/id.js';
-import { MiUser } from './User.js';
+import { type MiUser } from './User.js';
 import { MiDriveFolder } from './DriveFolder.js';
 
 @Entity('drive_file')
@@ -22,7 +22,7 @@ export class MiDriveFile {
 	})
 	public userId: MiUser['id'] | null;
 
-	@ManyToOne(type => MiUser, {
+	@ManyToOne('MiUser', {
 		onDelete: 'SET NULL',
 	})
 	@JoinColumn()

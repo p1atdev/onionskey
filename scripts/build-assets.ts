@@ -11,7 +11,7 @@ import * as yaml from 'js-yaml';
 import postcss from 'postcss';
 import * as terser from 'terser';
 
-import { build as buildLocales } from '../locales/index.js';
+import { build as buildLocales } from '../locales/index.ts';
 import generateDTS from '../locales/generateDTS.js';
 import meta from '../package.json' with { type: "json" };
 
