@@ -9,8 +9,8 @@
 	"scripts": {
 		"start": "bun run ./built/boot/entry.js",
 		"start:test": "cross-env NODE_ENV=test bun run ./built/boot/entry.js",
-		"migrate": "bun run typeorm migration:run -d ormconfig.js",
-		"revert": "bun run typeorm migration:revert -d ormconfig.js",
+		"migrate": "typeorm migration:run -d ormconfig.js",
+		"revert": "typeorm migration:revert -d ormconfig.js",
 		"check:connect": "bun run ./scripts/check_connect.js",
 		"build": "swc src -d built -D --strip-leading-paths",
 		"build:test": "swc test-server -d built-test -D --config-file test-server/.swcrc --strip-leading-paths",
