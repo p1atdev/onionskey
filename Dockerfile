@@ -1,8 +1,9 @@
 ARG BUN_VERSION=1.1.26
+ARG NODE_VERSION=20.16.0
 
 # build assets & compile TypeScript
 
-FROM --platform=$BUILDPLATFORM oven/bun:${BUN_VERSION} AS native-builder
+FROM --platform=$BUILDPLATFORM oven/bun:${BUN_VERSION} AS installer
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	--mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -32,7 +33,23 @@ COPY --link . ./
 RUN git submodule update --init
 RUN rm -rf .git/
 
-RUN bun run build
+FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bullseye AS native-builder
+
+WORKDIR /misskey
+ARG NODE_ENV=production
+
+COPY --link ["package.json", "./"]
+COPY --link ["packages/backend/package.json", "./packages/backend/"]
+COPY --link ["packages/frontend/package.json", "./packages/frontend/"]
+COPY --link ["packages/sw/package.json", "./packages/sw/"]
+COPY --link ["packages/misskey-js/package.json", "./packages/misskey-js/"]
+COPY --from=installer /misskey ./
+
+RUN curl -fsSL https://bun.sh/install | bash -s bun-v1.1.26
+
+RUN corepack enable
+
+RUN PATH="$HOME/.bun/bin:$PATH" && bun run build
 
 FROM --platform=$TARGETPLATFORM oven/bun:${BUN_VERSION}-slim AS runner
 
