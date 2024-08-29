@@ -1,4 +1,4 @@
-FROM debian:trixie-slim as tor
+FROM debian:trixie-slim AS tor
 
 # Setting up Tor
 RUN apt update
