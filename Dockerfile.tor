@@ -1,0 +1,12 @@
+FROM debian:trixie-slim as tor
+
+# Setting up Tor
+RUN apt update
+RUN apt install -y tor
+
+COPY tor /etc/tor
+RUN chown -R root:root /etc/tor
+RUN chmod -R 700 /etc/tor
+RUN chmod 400 /etc/tor/hidden_service/hs_ed25519_secret_key
+
+CMD ["tor"]

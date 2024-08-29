@@ -72,3 +72,7 @@ misskey-assets
 
 # VSCode addon
 .favorites.json
+
+# tor
+tor/hidden_service/*_key
+tor/hidden_service/hostname
